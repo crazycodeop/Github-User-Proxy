@@ -9,9 +9,9 @@ const UserProfile = ({ userData }) => {
         border={"2px solid"}
         borderColor={"green.500"}
         borderRadius={4}
-        padding={8}
-        direction={["column", "row"]} // stack on mobile, horizontal on larger screens
-        align={["center", "start"]}
+        padding={{ base: 4, md: 8 }} // Reduce padding on mobile devices
+        direction={{ base: "column", md: "row" }} // Stack on mobile, horizontal on larger screens
+        align={{ base: "center", md: "start" }}
       >
         <VStack gap={5}>
           <Avatar size={"2xl"} name={userData.name} src={userData.avatar_url} />
@@ -21,72 +21,66 @@ const UserProfile = ({ userData }) => {
             </a>
           </Button>
         </VStack>
-
-        <VStack ml={8} alignItems={"self-start"}>
-          {/* <Flex
-            gap={4}
-            flexWrap={{ base: "wrap", md: "nowrap" }}
-            justifyContent={{ base: "center", md: "flex-start" }}
-          >
-            <Badge fontSize={"0.9em"} colorScheme="orange">
-              Public Repos: {userData.public_repos}
-            </Badge>
-            <Badge fontSize={"0.9em"} colorScheme="pink">
-              Public Gists: {userData.public_gists}
-            </Badge>
-            <Badge fontSize={"0.9em"} colorScheme="cyan">
-              Followers: {userData.followers}
-            </Badge>
-            <Badge fontSize={"0.9em"} colorScheme="purple">
-              Following: {userData.following}
-            </Badge>
-          </Flex> */}
-
-          <Flex
-            flexWrap={{ base: "wrap", md: "nowrap" }}
-            justifyContent={{ base: "center", md: "flex-start" }}
-          >
+        {" "}
+        <Box
+          ml={{ base: 0, md: 8 }}
+          alignSelf={{ base: "center", md: "start" }}
+        >
+          <VStack spacing={2} alignItems="center" textAlign="center">
             <Badge
               fontSize={"0.9em"}
               colorScheme="orange"
-              mb={{ base: 2, md: 0 }}
-              mr={{ base: 0, md: 4 }}
+              display={{ base: "flex", md: "none" }}
+              mt={{ base: 3, md: 0 }}
             >
               Public Repos: {userData.public_repos}
             </Badge>
             <Badge
               fontSize={"0.9em"}
               colorScheme="pink"
-              mb={{ base: 2, md: 0 }}
-              mr={{ base: 0, md: 4 }}
+              display={{ base: "flex", md: "none" }}
             >
               Public Gists: {userData.public_gists}
             </Badge>
-            <Box display={{ base: "block", md: "none" }} width="100%" />
             <Badge
               fontSize={"0.9em"}
               colorScheme="cyan"
-              mb={{ base: 2, md: 0 }}
-              mr={{ base: 0, md: 4 }}
+              display={{ base: "flex", md: "none" }}
             >
               Followers: {userData.followers}
             </Badge>
             <Badge
               fontSize={"0.9em"}
               colorScheme="purple"
-              mb={{ base: 2, md: 0 }}
+              display={{ base: "flex", md: "none" }}
             >
               Following: {userData.following}
             </Badge>
-          </Flex>
-
-          <Text fontSize={"2xl"} fontWeight={"bold"} mt={4} color={"green.400"}>
+            <Flex
+              flexWrap="wrap"
+              justifyContent="flex-start"
+              display={{ base: "none", md: "flex" }} // Hide on mobile, display on larger screens
+            >
+              <Badge fontSize={"0.9em"} colorScheme="orange" mr={4}>
+                Public Repos: {userData.public_repos}
+              </Badge>
+              <Badge fontSize={"0.9em"} colorScheme="pink" mr={4}>
+                Public Gists: {userData.public_gists}
+              </Badge>
+              <Badge fontSize={"0.9em"} colorScheme="cyan" mr={4}>
+                Followers: {userData.followers}
+              </Badge>
+              <Badge fontSize={"0.9em"} colorScheme="purple">
+                Following: {userData.following}
+              </Badge>
+            </Flex>
+          </VStack>
+          <Text fontSize={"2xl"} pb={"2"} fontWeight={"bold"} mt={4} color={"green.400"} textAlign={{ base: "center", md: "start" }}>
             {userData.name}
           </Text>
-          <Text fontSize={"md"} fontWeight={"bold"} color={"green.500"}>
+          <Text fontSize={"md"} pb={"2"} fontWeight={"bold"} color={"green.500"} textAlign={{ base: "center", md: "start" }}>
             {userData.bio}
           </Text>
-
           <Box>
             <Text fontSize={"md"}>
               <Text as={"span"} fontWeight={"bold"} color={"green.200"} mr={1}>
@@ -121,9 +115,8 @@ const UserProfile = ({ userData }) => {
               {new Date(userData.created_at).toLocaleDateString()}
             </Text>
           </Box>
-        </VStack>
+        </Box>
       </Flex>
-
       <Repos reposUrl={userData.repos_url} />
     </>
   );

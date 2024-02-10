@@ -105,15 +105,22 @@ const Repos = ({ reposUrl }) => {
               bg={"whiteAlpha.200"}
               _hover={{ bg: "whiteAlpha.400" }}
               my={4}
-              px={10}
+              px={{ base: 4, md: 8 }} // Adjust padding for smaller and larger devices
+              py={{ base: 6, md: 4 }} // Adjust padding for smaller and larger devices
               gap={4}
               borderRadius={4}
               transition={"all 0.3s ease"}
-              justifyContent={"space-between"}
-              alignItems={"center"}
+              justifyContent={{ base: "center", md: "space-between" }} // Align center for mobile devices, space-between for larger screens
+              alignItems={{ base: "center", md: "center" }} // Align center for both mobile and larger screens
               flexWrap={{ base: "wrap", md: "nowrap" }} // Responsive flex-wrap
+              flexDirection={{ base: "column", md: "row" }} // Stack on smaller devices, horizontal on larger screens
             >
-              <Flex flex={1} direction={"column"} mb={{ base: 4, md: 0 }}>
+              <Flex
+                direction={"column"}
+                mb={{ base: 4, md: 0 }}
+                flex={{ base: 1, md: 2 }}
+                alignItems={{ base: "center", md: "flex-start" }} // Align center for mobile devices, flex-start for larger screens
+              >
                 <Link href={repo.html_url} fontSize={"md"} fontWeight={"bold"}>
                   {repo.name}
                 </Link>
@@ -124,12 +131,19 @@ const Repos = ({ reposUrl }) => {
                   textAlign={"center"}
                   px={1}
                   mt={1}
+                  maxW={"100%"} // Prevent badge from overflowing
+                  isTruncated // Truncate long text
                 >
                   Language: {repo.language || "None"}
                 </Badge>
               </Flex>
 
-              <Flex flex={1} gap={4} ml={{ base: 0, md: 6 }}>
+              <Flex
+                gap={3}
+                ml={{ base: 0, md: 6 }}
+                flex={{ base: 1, md: 1 }}
+                justifyContent="flex-end"
+              >
                 <Badge
                   fontSize={"0.9em"}
                   colorScheme="orange"
